@@ -1,0 +1,96 @@
+using System;
+
+internal class SalesAnalysisApp
+{
+    static void Main()
+    {
+        Console.Write("Enter number of days in the month: ");
+        int n = Convert.ToInt32(Console.ReadLine());
+
+        int[] sales = new int[n];
+
+        Console.WriteLine("\nEnter sales numbers for each day:");
+        for (int i = 0; i < n; i++)
+        {
+            Console.Write($"Day {i + 1} Sales: ");
+            sales[i] = Convert.ToInt32(Console.ReadLine());
+        }
+
+        int[] backupSales = new int[n];
+        Array.Copy(sales, backupSales, n);
+
+        Console.WriteLine("\nSales in Original Order:");
+        foreach (int s in sales)
+            Console.Write(s + " ");
+
+        int[] sortedSales = new int[n];
+        Array.Copy(sales, sortedSales, n);
+        Array.Sort(sortedSales);
+
+        Console.WriteLine("\n\nSales in Sorted Order:");
+        foreach (int s in sortedSales)
+            Console.Write(s + " ");
+
+        int total = 0;
+        int highest = sales[0];
+        int lowest = sales[0];
+
+        foreach (int s in sales)
+        {
+            total += s;
+            if (s > highest) highest = s;
+            if (s < lowest) lowest = s;
+        }
+
+        Console.WriteLine("\n\nTotal Sales for the Month = " + total);
+        Console.WriteLine("Highest Single-Day Sales = " + highest);
+        Console.WriteLine("Lowest Single-Day Sales = " + lowest);
+
+        Console.Write("\nEnter a sales value to search: ");
+        int searchValue = Convert.ToInt32(Console.ReadLine());
+
+        bool found = false;
+        foreach (int s in sales)
+        {
+            if (s == searchValue)
+            {
+                found = true;
+                break;
+            }
+        }
+
+        if (found)
+            Console.WriteLine("Sales value FOUND in the data.");
+        else
+            Console.WriteLine("Sales value NOT FOUND.");
+
+        Console.WriteLine("\nEnter another set of sales data to compare:");
+        int[] compareSales = new int[n];
+
+        for (int i = 0; i < n; i++)
+        {
+            Console.Write($"Day {i + 1} Sales: ");
+            compareSales[i] = Convert.ToInt32(Console.ReadLine());
+        }
+
+        bool identical = true;
+        for (int i = 0; i < n; i++)
+        {
+            if (sales[i] != compareSales[i])
+            {
+                identical = false;
+                break;
+            }
+        }
+
+        if (identical)
+            Console.WriteLine("\nBoth sets of sales data are IDENTICAL.");
+        else
+            Console.WriteLine("\nBoth sets of sales data are NOT IDENTICAL.");
+
+        Console.WriteLine("\nBackup Copy of Sales Data:");
+        foreach (int s in backupSales)
+            Console.Write(s + " ");
+    }
+}
+
